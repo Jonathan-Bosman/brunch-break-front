@@ -1,11 +1,11 @@
 <template>
     <form @submit.prevent="submit">
         <label for="nom">nom :</label>
-        <input v-model="nom" type="text" @change="onChange" name="nom" id="nom">
+        <input v-model="nom" type="text" name="nom" id="nom">
         <label for="description">description :</label>
-        <input v-model="description" type="text" @change="onChange" name="description" id="description">
+        <input v-model="description" type="text" name="description" id="description">
         <label for="prix">prix :</label>
-        <input v-model="prix" type="number" @change="onChange" name="prix" id="prix">
+        <input v-model="prix" type="number" name="prix" id="prix">
         <label for="image">image :</label>
         <input type="file" @change="handleFileUpload" name="image" id="image">
         <button type="submit">submit</button>
@@ -32,7 +32,6 @@ const submit = async () => {
     formData.append('description', description.value ? description.value : '');
     formData.append('prix', prix.value ? prix.value : 0);
     formData.append('image', selectedFile.value);
-    console.log([...formData]);
     try {
         const response = await fetch(`http://localhost:3000/api/menu/create`, {
             method: 'POST',
