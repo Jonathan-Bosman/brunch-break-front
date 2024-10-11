@@ -1,9 +1,17 @@
 <template>
-    <img src="http://localhost:8080/7266c593-e598-46b2-ad47-ea16e240eae2">
+  <div v-if="menu">
+    <h2>{{ menu.nom }}</h2>
+    <p>{{ menu.description }}</p>
+    <p>Prix : {{ menu.prix }} €</p>
+    <!-- Afficher l'image -->
+    <img v-if="imageUrl" :src="imageUrl" alt="Image du plat" />
+  </div>
 </template>
 
+
+
 <script setup lang="ts">
-import { onMounted, ref,  } from 'vue';
+import { computed, onMounted, ref,  } from 'vue';
 
 // onMounted(async () => {
 //     try{
@@ -20,18 +28,27 @@ import { onMounted, ref,  } from 'vue';
 //         console.error(err);
 //       }
 // });
+const menu = ref();
 const imageUrl = ref();
 
 onMounted(async () => {
   const imageId = 4; 
   try {
-    const response = await fetch(`http://localhost:3000/api/menu/4`);
-    if (response.ok) {
-      const blob = await response.blob();
-      imageUrl.value = URL.createObjectURL(blob);
-      console.log(imageUrl.value);
+    const res = await fetch(`http://localhost:3000/api/menu/${imageId}`);
+    if (res.ok) {
+      const oneMenu = await res.json();
+      const menuData = oneMenu.results[0];
+      
+      // Assigner les données du menu à la variable `menu`
+      menu.value = menuData;
+
+      // Construire l'URL de l'image
+      const imagePath = `http://localhost:3000/uploads/${menuData.filename}`;
+      
+      // Stocker l'URL pour l'afficher dans le template
+      imageUrl.value = imagePath;
     } else {
-      console.error('Erreur lors de la récupération de l\'image');
+      console.error('Erreur lors de la récupération du menu');
     }
   } catch (error) {
     console.error('Erreur lors de la requête :', error);
