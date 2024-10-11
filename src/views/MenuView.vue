@@ -1,25 +1,30 @@
 <template>
-  <div v-if="menu">
-    <h2>{{ menu[0].nom }}</h2>
-    <p>{{ menu[0].description }}</p>
-    <p>Prix : {{ menu[0].prix }} €</p>
-    <img :src="'http://localhost:3000/uploads/'+menu[0].filename" alt="Image du plat" />
-  </div>
+  <p v-if="isLoading">Chargement...</p>
+  <MenuCard
+    v-for="menu in menus"
+    :id="menu.id"
+    :nom="menu.nom"
+    :description="menu.description"
+    :prix="menu.prix"
+    :url="'http://localhost:3000/uploads/'+menu.filename"
+    />
 </template>
 
 
 
 <script setup lang="ts">
+import MenuCard from '@/components/MenuCard.vue';
 import { computed, onMounted, ref,  } from 'vue';
 
-const menu = ref();
+const menus = ref();
+const isLoading = ref(true);
 
 onMounted(async () => {
     try{
         const res = await fetch(`http://localhost:3000/api/menu`);
         const allMenues = await res.json();
-        menu.value = allMenues;
-        console.log(menu.value);
+        menus.value = allMenues;
+        isLoading.value = false;
         // const data = await Promise.(allMenues.results);
         // const menues = data.map(item => ({
         //   id: item.id,
@@ -31,7 +36,6 @@ onMounted(async () => {
         console.error(err);
       }
 });
-
 </script>
 
 <style scoped lang="scss">
