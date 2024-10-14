@@ -26,6 +26,7 @@ const menu = ref({
 const handleFileUpload = (event) => {
     selectedFile.value = event.target.files[0];
 }
+// TODO: mettre l'appel à l'api dans le store
 const submit = async () => {
     const formData = new FormData();
     formData.append('nom', nom.value ? nom.value : '');
@@ -49,6 +50,7 @@ const submit = async () => {
 </script>
 
 <style scoped lan="scss">
+/** TODO: CSS du formulaire */
 *{
     background-color: chartreuse;
 }
