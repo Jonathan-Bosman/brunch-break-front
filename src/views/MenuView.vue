@@ -18,27 +18,15 @@
 <script setup lang="ts">
 import MenuCard from '@/components/MenuCard.vue';
 import { computed, onMounted, ref,  } from 'vue';
+import { useStore } from 'vuex';
 
-const menus = ref();
+const store = useStore();
+const menus = computed(() => store.getters.allMenus);
 const isLoading = ref(true);
 
-// TODO: mettre l'appel à l'api dans le store
 onMounted(async () => {
-    try{
-        const res = await fetch(`http://localhost:3000/api/menu`);
-        const allMenues = await res.json();
-        menus.value = allMenues;
-        isLoading.value = false;
-        // const data = await Promise.(allMenues.results);
-        // const menues = data.map(item => ({
-        //   id: item.id,
-        //   nom: item.nom,
-        //   description: item.description,
-        //   prix: item.prix
-        // }));
-      } catch(err) {
-        console.error(err);
-      }
+  await store.dispatch('fetchAllMenus');
+  isLoading.value = false;
 });
 </script>
 
