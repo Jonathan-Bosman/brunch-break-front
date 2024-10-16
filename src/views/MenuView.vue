@@ -16,9 +16,9 @@
 
 
 <script setup lang="ts">
-import MenuCard from '@/components/MenuCard.vue';
 import { computed, onMounted, ref,  } from 'vue';
 import { useStore } from 'vuex';
+import MenuCard from '@/components/MenuCard.vue';
 
 const store = useStore();
 const menus = computed(() => store.getters.allMenus);
