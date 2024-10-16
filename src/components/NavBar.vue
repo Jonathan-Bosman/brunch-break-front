@@ -1,6 +1,7 @@
 <template>
+    <NavMenu class="hidden" :class="{displayed : isOpen===true}" @emitClose="receiveClose" />
     <div class="navBar">
-      <div class="button">
+      <div class="button" @click="ouverture">
         <!-- Contenu du bouton -->
       </div>
       <div class="logo">
@@ -14,6 +15,16 @@
    
   
 <script setup lang="ts">
+import { ref } from 'vue';
+import NavMenu from './NavMenu.vue';
+
+const isOpen = ref(false);
+const ouverture = () => {
+  isOpen.value = true;
+}
+const receiveClose = () => {
+  isOpen.value = false;
+}
 </script>
 
 <style scoped>
@@ -114,5 +125,14 @@ image-container {
   height: 200px; /* Ajustez la hauteur selon vos besoins */
 }
 
-
+.hidden{
+  display: none;
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 50;
+}
+.displayed{
+  display: flex;
+}
 </style>
