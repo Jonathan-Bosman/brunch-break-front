@@ -8,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
+import 'vue3-carousel/dist/carousel.css';
 import NavBar from '@/components/NavBar.vue';
 import HeaderBrunch from '@/components/HeaderBrunch.vue'
 import CallToAction from './components/CallToAction.vue';

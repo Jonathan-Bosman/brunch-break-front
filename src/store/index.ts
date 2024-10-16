@@ -6,6 +6,7 @@ export default createStore({
   state: {
     token: localStorage.getItem('token') || '' as string,
     allMenus: [],
+    allPromotions: [],
   },
   mutations: {
     setToken(state, token) {
@@ -14,6 +15,9 @@ export default createStore({
     },
     setAllMenus(state, menus) {
       state.allMenus = menus;
+    },
+    setAllPromotions(state, promotions) {
+      state.allPromotions = promotions;
     },
   },
   actions: {
@@ -54,10 +58,20 @@ export default createStore({
         console.error(err);
       }
     },
+    async fetchAllPromotions({ commit }) {
+      try{
+        const res = await fetch(`${API_ROOT}/promotions`);
+        const allPromotions = await res.json();
+        commit('setAllPromotions', allPromotions);
+      } catch(err) {
+        console.error(err);
+      }
+    },
   },
   getters: {
     token: (state) => state.token,
     allMenus: (state) => state.allMenus,
+    allPromotions: (state) => state.allPromotions,
   },
   modules: {
   }
