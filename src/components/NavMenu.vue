@@ -5,7 +5,7 @@
         <router-link to="/menu" @click="close">Menu</router-link>
         <router-link to="/" @click="close">Contact</router-link>
         <router-link to="/" @click="close">Blog</router-link>
-        <router-link to="/" @click="close">Réservation</router-link>
+        <router-link to="/reservation" @click="close">Réservation</router-link>
     </div>
 </template>
 

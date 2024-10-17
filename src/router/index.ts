@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import BackOffice from '@/views/BackOffice.vue'
 import MenuView from '@/views/MenuView.vue'
+import ReservationView from '@/views/ReservationView.vue'
+import BackOffice from '@/views/BackOffice.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -21,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/menu',
     name: 'menu-office',
     component: MenuView
+  },
+  {
+    path: '/reservation',
+    name: 'reservations',
+    component: ReservationView
   },
   {
     path: '/back-office',
