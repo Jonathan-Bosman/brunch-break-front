@@ -7,6 +7,9 @@ export default createStore({
     token: localStorage.getItem('token') || '' as string,
     allMenus: [],
     allPromotions: [],
+    allReservations: [],
+    allCapacite: [],
+    allHoraires: [],
   },
   mutations: {
     setToken(state, token) {
@@ -19,13 +22,22 @@ export default createStore({
     setAllPromotions(state, promotions) {
       state.allPromotions = promotions;
     },
+    setAllReservations(state, reservations) {
+      state.allReservations = reservations;
+    },
+    setAllCapacite(state, capacite) {
+      state.allCapacite = capacite;
+    },
+    setAllHoraires(state, horaires) {
+      state.allHoraires = horaires;
+    },
   },
   actions: {
     async login({ commit }, user) {
       try{
-        const res = await fetch(`${API_ROOT}/users/login/`, {
+        const res = await fetch(`${API_ROOT}/utilisateurs/login/`, {
           method: 'post',
-          headers: {'Content-Type': 'application/json',},
+          headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(user)
         });
         const data = await res.json();
@@ -34,6 +46,17 @@ export default createStore({
         } else {
           commit('setToken', data.token);
         }
+      } catch(err) {
+        console.error(err);
+      }
+    },
+    async createUtilisateur({ commit }, { utilisateur }) {
+      try {
+        const res = await fetch(`${API_ROOT}/utilisateurs/create`, {
+          method: "put",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(utilisateur)
+        });
       } catch(err) {
         console.error(err);
       }
@@ -67,11 +90,52 @@ export default createStore({
         console.error(err);
       }
     },
+    async fetchAllReservations({ commit }) {
+      try{
+        const res = await fetch(`${API_ROOT}/reservations`);
+        const allReservations = await res.json();
+        commit('setAllReservations', allReservations);
+      } catch(err) {
+        console.error(err);
+      }
+    },
+    async fetchAllCapacite({ commit }) {
+      try{
+        const res = await fetch(`${API_ROOT}/reservations/capacite`);
+        const allCapacite = await res.json();
+        commit('setAllCapacite', allCapacite);
+      } catch(err) {
+        console.error(err);
+      }
+    },
+    async fetchAllHoraires({ commit }) {
+      try{
+        const res = await fetch(`${API_ROOT}/reservations/horaires`);
+        const allHoraires = await res.json();
+        commit('setAllHoraires', allHoraires);
+      } catch(err) {
+        console.error(err);
+      }
+    },
+    async createReservation({ commit }, { reservation }) {
+      try {
+        const res = await fetch(`${API_ROOT}/reservations/create`, {
+          method: "post",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(reservation)
+        });
+      } catch(err) {
+        console.error(err);
+      }
+    },
   },
   getters: {
     token: (state) => state.token,
     allMenus: (state) => state.allMenus,
     allPromotions: (state) => state.allPromotions,
+    allReservations: (state) => state.allReservations,
+    allCapacite: (state) => state.allCapacite,
+    allHoraires: (state) => state.allHoraires,
   },
   modules: {
   }

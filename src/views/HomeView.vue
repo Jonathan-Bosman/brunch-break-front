@@ -28,13 +28,9 @@ onMounted(async () => {
     promotion.images = [];
     const promo = JSON.parse(promotion.id_menu);
     promo.forEach(prom => {
-      console.log(menus.value[prom].filepath);
       promotion.images.push(`http://localhost:3000/${menus.value[prom].filepath}`);
     });
-    console.log(promo);
   });
-  console.log(JSON.parse(promotions.value[0].id_menu));
-  console.log(promotions.value[0]);
   isLoading.value = false;
 });
 </script>

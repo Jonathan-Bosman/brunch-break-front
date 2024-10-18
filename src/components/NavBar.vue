@@ -35,6 +35,7 @@ const receiveClose = () => {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 5;
     display: flex;
     justify-content: space-between;
     align-items: center;
