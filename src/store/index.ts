@@ -35,9 +35,9 @@ export default createStore({
   actions: {
     async login({ commit }, user) {
       try{
-        const res = await fetch(`${API_ROOT}/users/login/`, {
+        const res = await fetch(`${API_ROOT}/utilisateurs/login/`, {
           method: 'post',
-          headers: {'Content-Type': 'application/json',},
+          headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(user)
         });
         const data = await res.json();
@@ -46,6 +46,17 @@ export default createStore({
         } else {
           commit('setToken', data.token);
         }
+      } catch(err) {
+        console.error(err);
+      }
+    },
+    async createUtilisateur({ commit }, { utilisateur }) {
+      try {
+        const res = await fetch(`${API_ROOT}/utilisateurs/create`, {
+          method: "put",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(utilisateur)
+        });
       } catch(err) {
         console.error(err);
       }
@@ -102,6 +113,17 @@ export default createStore({
         const res = await fetch(`${API_ROOT}/reservations/horaires`);
         const allHoraires = await res.json();
         commit('setAllHoraires', allHoraires);
+      } catch(err) {
+        console.error(err);
+      }
+    },
+    async createReservation({ commit }, { reservation }) {
+      try {
+        const res = await fetch(`${API_ROOT}/reservations/create`, {
+          method: "post",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(reservation)
+        });
       } catch(err) {
         console.error(err);
       }

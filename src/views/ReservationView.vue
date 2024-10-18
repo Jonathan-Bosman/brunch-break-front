@@ -49,6 +49,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
+import router from '@/router';
 
 const store = useStore();
 const reservations = computed(() => store.getters.allReservations);
@@ -112,8 +113,8 @@ const dateChange  = () => {
   }
 }
 
-const onSubmit = () => {
-  const user = {
+const onSubmit = async () => {
+  const utilisateur = {
     nom: nom.value,
     prenom: prenom.value,
     email: email.value,
@@ -128,8 +129,9 @@ const onSubmit = () => {
     heure: heureChoisie.value,
     nombre_personnes: nombrePersonnes.value,
   }
-  console.log(user);
-  console.log(reservation);
+  await store.dispatch('createUtilisateur', { utilisateur: utilisateur });
+  await store.dispatch('createReservation', { reservation: reservation });
+  router.push('/');
 }
 
 onMounted(async () => {
@@ -137,7 +139,6 @@ onMounted(async () => {
     await store.dispatch('fetchAllReservations');
     await store.dispatch('fetchAllCapacite');
     await store.dispatch('fetchAllHoraires');
-    console.log(reservations.value, capacite.value, horaires.value);
   } catch (error) {
     console.error('Erreur lors du chargement des données:', error);
   }
