@@ -39,6 +39,7 @@ const imageLoadError = (event) => {
 }
 
 h2{
+    color: #6C9E41;
     text-align: center;
     margin: 1.5rem auto;
 }

@@ -1,14 +1,16 @@
 <template>
-    <NavMenu class="hidden" :class="{displayed : isOpen===true}" @emitClose="receiveClose" />
+    <NavMenu class="hidden" :class="{displayed : isOpen===true}" @emitClose="fermeture" />
     <div class="navBar">
-      <div class="button" @click="ouverture">
-        <!-- Contenu du bouton -->
+      <div v-if="isOpen===true" class="button" @click="fermeture">
+        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="m251.33-204.67-46.66-46.66L433.33-480 204.67-708.67l46.66-46.66L480-526.67l228.67-228.66 46.66 46.66L526.67-480l228.66 228.67-46.66 46.66L480-433.33 251.33-204.67Z"/></svg>
+      </div>
+      <div v-if="isOpen===false" class="button" @click="ouverture">
+        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M120-240v-66.67h720V-240H120Zm0-206.67v-66.66h720v66.66H120Zm0-206.66V-720h720v66.67H120Z"/></svg>
       </div>
       <div class="logo">
-        <!-- Contenu du logo -->
       </div>
-      <div class="search">
-        <!-- Contenu de la barre de recherche -->
+      <div class="button">
+        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M792-120.67 532.67-380q-30 25.33-69.64 39.67Q423.39-326 378.67-326q-108.44 0-183.56-75.17Q120-476.33 120-583.33t75.17-182.17q75.16-75.17 182.5-75.17 107.33 0 182.16 75.17 74.84 75.17 74.84 182.27 0 43.23-14 82.9-14 39.66-40.67 73l260 258.66-48 48Zm-414-272q79.17 0 134.58-55.83Q568-504.33 568-583.33q0-79-55.42-134.84Q457.17-774 378-774q-79.72 0-135.53 55.83-55.8 55.84-55.8 134.84t55.8 134.83q55.81 55.83 135.53 55.83Z"/></svg>
       </div>
     </div>
 </template>
@@ -22,14 +24,14 @@ const isOpen = ref(false);
 const ouverture = () => {
   isOpen.value = true;
 }
-const receiveClose = () => {
+const fermeture = () => {
   isOpen.value = false;
 }
 </script>
 
 <style scoped>
 .navBar {
-    height : 10vh;
+    height : 13vh;
     background-color: #FDF4D1;
     width: 100%;
     position: fixed;
@@ -42,95 +44,32 @@ const receiveClose = () => {
 }
 
 .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width : 5vh;
     height : 5vh;
-    background-color: #6C9E41;
-    position: relative;
+    padding: 0;
+    margin: auto 1.25rem;
+    border: none;
+    background-color: transparent;
 }
 
 .logo {
-    width : 15vh;
-    height : 07vh;
-    background-color: #6C9E41 ;
+    width : 10vh;
+    height : 100%;
+    background-color: transparent;
+    background-image: url("../assets/logo.png");
+    background-repeat: no-repeat;
+    background-size: contain;
     position: relative;
-} 
-
-.search {
-    width : 7vh;
-    height : 5vh;
-    background-color: #6C9E41  ;
-    position: relative;
-}
-.image-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10vh; /* Pour éviter de chevaucher la navbar */
-  width: 105%;
-  height: 200px; /* Ajustez la hauteur selon vos besoins */
-}
-
-.image {
-  width: 110%;
-  height: 100%;
-  object-fit: cover; /* Pour s'assurer que l'image prend toute la place disponible sans être déformée */
-  border-bottom: 2px solid #6c9e41; /* Bordure entre l'image et le texte */
-}
-
-
-.text-overlay {
-  position: absolute;
-  top: 50%;
-  left: 45%;
-  transform: translate(-50%, -50%);
-  background-color: #DE7B14; /* Couleur semi-transparente */
-  padding: 03px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.text-box h2 {
-  color: #DE7B14;
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  font-size: 240px;
-}
-
-.text-box p {
-  color: #faf6f9;
-  margin: 5px 0 0 0;
-  font-family: 'Arial', sans-serif;
-  font-size: 16px;
-}
-
-/* Barre de couleur avec texte */
-.colored-bar {
-
-  width: 100%;
-  background-color: #FDF4D1; /* Couleur de la barre */
-  text-align: center;
-  color: #6C9E41;
-  padding: 20px -0px;
-  object-fit: cover; 
-  margin: 0px 0 100px 0;
-}
-
-image-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10vh; /* Pour éviter de chevaucher la navbar */
-  width: 105%;
-  height: 200px; /* Ajustez la hauteur selon vos besoins */
 }
 
 .hidden{
   display: none;
   position: fixed;
-  top: 1.5rem;
-  left: 1.5rem;
+  top: 13vh;
+  left: 0;
   z-index: 50;
 }
 .displayed{

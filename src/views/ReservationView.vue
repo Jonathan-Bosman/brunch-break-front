@@ -1,16 +1,32 @@
 <template>
+  <div class="image">
+    <img src="../assets/img-reservation.jpg" alt="">
+  </div>
+  <h2>Réservation</h2>
   <form @submit.prevent="onSubmit">
-    <div class="button" @click="openPersonnes"><span>⫯⫰⫯</span><span>Nombre de personnes</span><span>⫯⫰⫯</span></div>
+    <div class="button" @click="openPersonnes">
+      <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
+      <span>Nombre de personnes</span>
+      <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
+    </div>
     <div class="select visible" :class="{hidden : isOpenPersonnes===false}" v-if="capacite && capacite.length && capacite[0].nombre_personnes">
       <p v-if="isLoading">Chargement...</p>
       <p class="options" :class="{selectedOpt : nombrePersonnes===i+1}" v-for="(cap, i) in capacite[0].nombre_personnes" @click="nombrePersonnes=i+1">{{ i+1 }}</p>
     </div>
-    <div class="button" @click="openDate"><span>⫯⫰⫯</span><span>Sélectionner la date</span><span>⫯⫰⫯</span></div>
+    <div class="button" @click="openDate">
+      <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
+      <span>Sélectionner la date</span>
+      <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
+    </div>
     <div class="visible" :class="{hidden : isOpenDate===false}" v-if="capacite && capacite.length && capacite[0].nombre_personnes">
       <p v-if="isLoading">Chargement...</p>
       <VDatePicker :color="'orange'" @click="dateChange" v-model="date" />
     </div>
-    <div class="button" @click="openHeure"><span>⫯⫰⫯</span><span>Sélectionner l'heure</span><span>⫯⫰⫯</span></div>
+    <div class="button" @click="openHeure">
+      <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
+      <span>Sélectionner l'heure</span>
+      <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
+    </div>
     <div class="select visible" :class="{hidden : isOpenHeure===false}" v-if="capacite && capacite.length && capacite[0].nombre_personnes">
       <p v-if="isLoading">Chargement...</p>
       <p class="options" v-if="horairesJour.length<1">Aucune horaire pour cette date.</p>
@@ -41,7 +57,7 @@
         <p class="checkBox">J'ai lu et consent à la <RouterLink to="/confidentialite">Politique de confidentialité</RouterLink> et aux <RouterLink to="/conditions">CGU</RouterLink>RouterLink> :</p>
         <input v-model="consent" type="checkbox" name="consent" id="consent">
       </label>
-      <button :disabled="!consent" type="submit">Réserver</button>
+      <button :disabled="!consent" type="submit">RÉSERVER</button>
     </div>
   </form>
 </template>
@@ -92,10 +108,10 @@ const dateChange  = () => {
     if((index+15-Math.floor((index)/100)*100)<60 && index+15<horaires.value[day.value-1].fermeture_matin) {
       horairesJour.value.push(index+15);
     }
-    if((index+30-Math.floor((index)/100)*100)<60 && index+15<horaires.value[day.value-1].fermeture_matin) {
+    if((index+30-Math.floor((index)/100)*100)<60 && index+30<horaires.value[day.value-1].fermeture_matin) {
       horairesJour.value.push(index+30);
     }
-    if((index+45-Math.floor((index)/100)*100)<60 && index+15<horaires.value[day.value-1].fermeture_matin) {
+    if((index+45-Math.floor((index)/100)*100)<60 && index+45<horaires.value[day.value-1].fermeture_matin) {
       horairesJour.value.push(index+45);
     }
   }
@@ -104,10 +120,10 @@ const dateChange  = () => {
     if((index+15-Math.floor((index)/100)*100)<60 && index+15<horaires.value[day.value-1].fermeture_soir) {
       horairesJour.value.push(index+15);
     }
-    if((index+30-Math.floor((index)/100)*100)<60 && index+15<horaires.value[day.value-1].fermeture_soir) {
+    if((index+30-Math.floor((index)/100)*100)<60 && index+30<horaires.value[day.value-1].fermeture_soir) {
       horairesJour.value.push(index+30);
     }
-    if((index+45-Math.floor((index)/100)*100)<60 && index+15<horaires.value[day.value-1].fermeture_soir) {
+    if((index+45-Math.floor((index)/100)*100)<60 && index+45<horaires.value[day.value-1].fermeture_soir) {
       horairesJour.value.push(index+45);
     }
   }
@@ -147,6 +163,20 @@ onMounted(async () => {
 </script>
 
 <style lang="scss">
+h2 {
+  margin: 2rem;
+  font-family: Roboto, sans-serif;
+  color: #DE7B14;
+  font-size: 25px;
+  text-align: center;
+}
+.image{
+  width: 100vw;
+}
+img {
+  margin-top: 5vh;
+  width: 100%;
+}
 form {
     display: flex;
     flex-direction: column;
@@ -180,20 +210,21 @@ form {
     border-radius: 12px;
     background-color: #6C9E41;
     width: 100%;
-    max-width: 80%;
+    max-width: 85%;
     min-width: 50%;
     margin: 1rem;
     padding: 1rem;
 }
-
+  
 .form label {
-    display: flex;
-    width: 100%;
-    color: white;
+  display: flex;
+  width: 100%;
+  color: white;
 }
 
 .form p {
     width: 50%;
+    font-size: 16px;
 }
 
 .form p.checkBox {
@@ -213,7 +244,9 @@ form {
 }
 
 .form button {
-  width: auto;
+  width: 9rem;
+  height: 3rem;
+  font-size: 20px;
   background-color: white;
   color: #6C9E41;
 }
@@ -266,6 +299,9 @@ form {
 }
 
 @media screen and (min-width: 600px) {
+  img {
+    margin-top: -25vh;
+  }
   form {
     margin: 3.5rem;
   }

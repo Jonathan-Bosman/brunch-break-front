@@ -1,4 +1,6 @@
 <template>
+  <HeaderBrunch/>
+  <CallToAction/>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png">
     <p v-if="isLoading">Chargement...</p>
@@ -15,6 +17,8 @@
 import { computed, onMounted, ref,  } from 'vue';
 import { useStore } from 'vuex';
 import PromoCarousel from '@/components/PromoCarousel.vue';
+import HeaderBrunch from '@/components/HeaderBrunch.vue';
+import CallToAction from '@/components/CallToAction.vue';
 
 const store = useStore();
 const menus = computed(() => store.getters.allMenus);
