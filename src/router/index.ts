@@ -1,22 +1,21 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MenuView from '@/views/MenuView.vue'
+import ContactView from '@/views/ContactView.vue'
 import ReservationView from '@/views/ReservationView.vue'
 import BackOffice from '@/views/BackOffice.vue'
+import NoView from '@/views/NoView.vue'
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/:pathMatch(.*)*',
+    name: '404',
+    component: NoView
+  },
   {
     path: '/',
     name: 'home',
     component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
     path: '/menu',
@@ -24,8 +23,13 @@ const routes: Array<RouteRecordRaw> = [
     component: MenuView
   },
   {
+    path: '/contact',
+    name: 'contact',
+    component: ContactView
+  },
+  {
     path: '/reservation',
-    name: 'reservations',
+    name: 'reservation',
     component: ReservationView
   },
   {

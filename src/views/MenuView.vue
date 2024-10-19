@@ -1,4 +1,5 @@
 <template>
+  <h2>Nos recettes et boissons</h2>
   <div class="wrapper">
     <div class="telecharger" @click="">Télécharger pdf</div>
     <p v-if="isLoading">Chargement...</p>
@@ -35,6 +36,15 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 12vh;
+}
+h2 {
+  margin: 2rem;
+  padding-top: 14vh;
+  font-family: Roboto, sans-serif;
+  color: #DE7B14;
+  font-size: 25px;
+  text-align: center;
 }
 .telecharger{
   margin: 1.5rem auto;
