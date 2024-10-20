@@ -2,12 +2,14 @@
   <div class="mainCtn">
     <NavBar/>
     <RouterView/>
+    <Footer/>
   </div>
 </template>
 
 <script setup lang="ts">
 import 'vue3-carousel/dist/carousel.css';
 import NavBar from '@/components/NavBar.vue';
+import Footer from '@/components/Footer.vue';
 
 </script>
 

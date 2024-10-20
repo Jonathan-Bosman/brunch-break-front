@@ -69,6 +69,17 @@ export default createStore({
         console.error(err);
       }
     },
+    async createUtilisateurNewsletter({ commit }, { utilisateur }) {
+      try {
+        const res = await fetch(`${API_ROOT}/utilisateurs/newsletter`, {
+          method: "put",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(utilisateur)
+        });
+      } catch(err) {
+        console.error(err);
+      }
+    },
     async fetchAllMenus({ commit }) {
       try{
         const res = await fetch(`${API_ROOT}/menu`);
