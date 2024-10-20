@@ -7,6 +7,9 @@ import BlogView from '@/views/BlogView.vue'
 import ArticleView from '@/views/ArticleView.vue'
 import ReservationView from '@/views/ReservationView.vue'
 import NoView from '@/views/NoView.vue'
+import ConditionsGenerales from '@/views/ConditionsGenerales.vue'
+import PolitiqueConfidentialite from '@/views/PolitiqueConfidentialite.vue'
+import MentionsLegales from '@/views/MentionsLegales.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -48,6 +51,21 @@ const routes: Array<RouteRecordRaw> = [
     path: '/back-office',
     name: 'back-office',
     component: BackOffice
+  },
+  {
+    path: '/conditions',
+    name: 'conditions',
+    component: ConditionsGenerales
+  },
+  {
+    path: '/confidentialite',
+    name: 'confidentialite',
+    component: PolitiqueConfidentialite
+  },
+  {
+    path: '/mentions',
+    name: 'mentions',
+    component: MentionsLegales
   }
 ]
 

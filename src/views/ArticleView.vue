@@ -39,7 +39,8 @@ onMounted(async () => {
 h2, p, pre {
     color: #000000;
     width: 90%;
-    word-break: break-all;
+    overflow-wrap: break-word;
+    word-break: break-word;
     text-wrap: balance;
 }
 p {
