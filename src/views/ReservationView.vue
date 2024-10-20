@@ -9,29 +9,29 @@
       <span>Nombre de personnes</span>
       <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
     </div>
-    <div class="select visible" :class="{hidden : isOpenPersonnes===false}" v-if="capacite && capacite.length && capacite[0].nombre_personnes">
-      <p v-if="isLoading">Chargement...</p>
+    <div class="select visible" :class="{hidden : isOpenPersonnes===false}" v-if="!isLoading && capacite && capacite.length && capacite[0].nombre_personnes">
       <p class="options" :class="{selectedOpt : nombrePersonnes===i+1}" v-for="(cap, i) in capacite[0].nombre_personnes" @click="nombrePersonnes=i+1">{{ i+1 }}</p>
     </div>
+    <p v-else>Chargement...</p>
     <div class="button" @click="openDate">
       <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
       <span>Sélectionner la date</span>
       <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
     </div>
-    <div class="visible" :class="{hidden : isOpenDate===false}" v-if="capacite && capacite.length && capacite[0].nombre_personnes">
-      <p v-if="isLoading">Chargement...</p>
+    <div class="visible" :class="{hidden : isOpenDate===false}" v-if="!isLoading && capacite && capacite.length && capacite[0].nombre_personnes">
       <VDatePicker :color="'orange'" @click="dateChange" v-model="date" />
     </div>
+    <p v-else>Chargement...</p>
     <div class="button" @click="openHeure">
       <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
       <span>Sélectionner l'heure</span>
       <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
     </div>
-    <div class="select visible" :class="{hidden : isOpenHeure===false}" v-if="capacite && capacite.length && capacite[0].nombre_personnes">
-      <p v-if="isLoading">Chargement...</p>
-      <p class="options" v-if="horairesJour.length<1">Aucune horaire pour cette date.</p>
-      <p class="options" :class="{selectedOpt : heureChoisie===heure}" v-for="(heure, i) in horairesJour" @click="heureChoisie=heure">{{ Math.floor((heure)/100).toString().length<2?'0'+Math.floor((heure)/100).toString():Math.floor((heure)/100).toString() }}h{{ (heure-Math.floor((heure)/100)*100).toString().length<2?(heure-Math.floor((heure)/100)*100).toString()+'0':(heure-Math.floor((heure)/100)*100).toString() }}</p>
+    <div class="select visible" :class="{hidden : isOpenHeure===false}" v-if="!isLoading && capacite && capacite.length && capacite[0].nombre_personnes">
+      <p class="options" v-if="horairesJour.length>0" :class="{selectedOpt : heureChoisie===heure}" v-for="heure in horairesJour" @click="heureChoisie=heure">{{ Math.floor((heure)/100).toString().length<2?'0'+Math.floor((heure)/100).toString():Math.floor((heure)/100).toString() }}h{{ (heure-Math.floor((heure)/100)*100).toString().length<2?(heure-Math.floor((heure)/100)*100).toString()+'0':(heure-Math.floor((heure)/100)*100).toString() }}</p>
+      <p class="options" v-else>Aucune horaire pour cette date.</p>
     </div>
+    <p v-else>Chargement...</p>
     <div class="form">
       <label for="nom">
         <p>Nom :</p>

@@ -2,8 +2,10 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MenuView from '@/views/MenuView.vue'
 import ContactView from '@/views/ContactView.vue'
-import ReservationView from '@/views/ReservationView.vue'
 import BackOffice from '@/views/BackOffice.vue'
+import BlogView from '@/views/BlogView.vue'
+import ArticleView from '@/views/ArticleView.vue'
+import ReservationView from '@/views/ReservationView.vue'
 import NoView from '@/views/NoView.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -26,6 +28,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/contact',
     name: 'contact',
     component: ContactView
+  },
+  {
+    path: '/blog',
+    name: 'blog',
+    component: BlogView
+  },
+  {
+    path: '/blog/:id',
+    name: 'article',
+    component: ArticleView
   },
   {
     path: '/reservation',

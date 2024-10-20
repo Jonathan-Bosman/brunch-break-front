@@ -8,6 +8,8 @@ export default createStore({
     allMenus: [],
     allPromotions: [],
     allReservations: [],
+    allBlog: [],
+    oneBlog: [],
     allCapacite: [],
     allHoraires: [],
   },
@@ -24,6 +26,12 @@ export default createStore({
     },
     setAllReservations(state, reservations) {
       state.allReservations = reservations;
+    },
+    setAllBlog(state, blog) {
+      state.allBlog = blog;
+    },
+    setOneBlog(state, blog) {
+      state.oneBlog = blog;
     },
     setAllCapacite(state, capacite) {
       state.allCapacite = capacite;
@@ -90,6 +98,24 @@ export default createStore({
         console.error(err);
       }
     },
+    async fetchAllBlog({ commit }) {
+      try{
+        const res = await fetch(`${API_ROOT}/blog`);
+        const allBlog = await res.json();
+        commit('setAllBlog', allBlog);
+      } catch(err) {
+        console.error(err);
+      }
+    },
+    async fetchOneBlog({ commit }, { id }) {
+      try{
+        const res = await fetch(`${API_ROOT}/blog/${id}`);
+        const oneBlog = await res.json();
+        commit('setOneBlog', oneBlog);
+      } catch(err) {
+        console.error(err);
+      }
+    },
     async fetchAllReservations({ commit }) {
       try{
         const res = await fetch(`${API_ROOT}/reservations`);
@@ -134,6 +160,8 @@ export default createStore({
     allMenus: (state) => state.allMenus,
     allPromotions: (state) => state.allPromotions,
     allReservations: (state) => state.allReservations,
+    allBlog: (state) => state.allBlog,
+    oneBlog: (state) => state.oneBlog,
     allCapacite: (state) => state.allCapacite,
     allHoraires: (state) => state.allHoraires,
   },

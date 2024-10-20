@@ -25,7 +25,7 @@ const props = defineProps({
 
 const imageSrc = ref(props.url);
 
-const imageLoadError = (event) => {
+const imageLoadError = () => {
     if (imageSrc.value !== noImage) {
         imageSrc.value = noImage;
     }
