@@ -2,8 +2,8 @@
   <h2>Nos recettes et boissons</h2>
   <div class="wrapper">
     <div class="telecharger" @click="">Télécharger pdf</div>
-    <p v-if="isLoading">Chargement...</p>
     <MenuCard
+      v-if="!isLoading && menus"
       v-for="menu in menus"
       :id="menu.id"
       :nom="menu.nom"
@@ -11,10 +11,9 @@
       :prix="menu.prix"
       :url="'http://localhost:3000/uploads/'+menu.filename"
       />
+    <p v-else>Chargement...</p>
   </div>
 </template>
-
-
 
 <script setup lang="ts">
 import { computed, onMounted, ref,  } from 'vue';

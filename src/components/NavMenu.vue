@@ -3,7 +3,7 @@
         <router-link class="link" to="/" @click="close">Accueil</router-link>
         <router-link class="link" to="/menu" @click="close">Menu</router-link>
         <router-link class="link" to="/contact" @click="close">Contact</router-link>
-        <router-link class="link" to="/" @click="close">Blog</router-link>
+        <router-link class="link" to="/blog" @click="close">Blog</router-link>
         <router-link class="link" to="/reservation" @click="close">Réservation</router-link>
     </div>
 </template>
