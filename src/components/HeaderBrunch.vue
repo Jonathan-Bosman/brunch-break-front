@@ -11,7 +11,6 @@
 <style scoped>
 .chef {
     padding-top: 10vh;
-    background-color: red;
     height : 30vh;
     background-image: url("../assets/header.jfif");
     background-size: cover;

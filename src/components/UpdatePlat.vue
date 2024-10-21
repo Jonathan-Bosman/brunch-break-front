@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="submit">
-        <h2>Ajouter un plat</h2>
+        <h2>Modifier un plat</h2>
         <label for="nom">
             <p>Nom :</p>
             <input v-model="nom" type="text" name="nom" id="nom">
@@ -18,20 +18,29 @@
             <p>Image :</p>
             <input type="file" @change="handleFileUpload" name="image" id="image">
         </label>
-        <button type="submit">Ajouter</button>
+        <button type="submit">Modifier</button>
+        <button @click.prevent="effacer">Effacer</button>
     </form>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, defineProps } from 'vue';
 import { useStore } from 'vuex';
+
+const props = defineProps({
+    id: Number,
+    nom: String,
+    description: String,
+    prix: Number
+});
 
 const store = useStore();
 const token = computed(() => store.getters.token);
 const selectedFile = ref();
-const nom = ref('');
-const description = ref('');
-const prix = ref(0);
+const id = ref(props.id);
+const nom = ref(props.nom);
+const description = ref(props.description);
+const prix = ref(props.prix/100);
 const handleFileUpload = (event) => {
     selectedFile.value = event.target.files[0];
 }
@@ -41,11 +50,16 @@ const submit = async () => {
     formData.append('description', description.value || '');
     formData.append('prix', (prix.value * 100).toString());
     formData.append('image', selectedFile.value);
-    await store.dispatch('createMenu', { menu: formData, token: token.value });
+    await store.dispatch('updateMenu', { menu: formData, id: id.value, token: token.value });
     nom.value="";
     description.value="";
     prix.value=0;
     selectedFile.value=null;
+}
+const effacer = async () => {
+    const confirmer = confirm(`Voulez vous effacer ${nom.value} ?`);
+    if(confirmer!==true)return;
+    else await store.dispatch('deleteMenu', { id: id.value, token: token.value});
 }
 </script>
 
@@ -59,7 +73,7 @@ label {
     color: white;
 }
 p {
-    width: 50%;
+    width: 30%;
 }
 .euroSign {
     width: auto;

@@ -1,18 +1,13 @@
 <template>
     <form @submit.prevent="submit">
-        <h2>Ajouter un plat</h2>
-        <label for="nom">
-            <p>Nom :</p>
-            <input v-model="nom" type="text" name="nom" id="nom">
+        <h2>Ajouter un post</h2>
+        <label for="titre">
+            <p>Titre :</p>
+            <input v-model="titre" type="text" name="titre" id="titre">
         </label>
-        <label for="description">
-            <p>Description :</p>
-            <input v-model="description" type="text" name="description" id="description">
-        </label>
-        <label for="prix">
-            <p>Prix :</p>
-            <input v-model="prix" type="number" step="0.01" name="prix" id="prix">
-            <p class="euroSign">€</p>
+        <label for="corps">
+            <p>Corps :</p>
+            <textarea v-model="corps" rows="10" type="text" name="corps" id="corps"></textarea>
         </label>
         <label for="image">
             <p>Image :</p>
@@ -29,22 +24,19 @@ import { useStore } from 'vuex';
 const store = useStore();
 const token = computed(() => store.getters.token);
 const selectedFile = ref();
-const nom = ref('');
-const description = ref('');
-const prix = ref(0);
+const titre = ref('');
+const corps = ref('');
 const handleFileUpload = (event) => {
     selectedFile.value = event.target.files[0];
 }
 const submit = async () => {
     const formData = new FormData();
-    formData.append('nom', nom.value || '');
-    formData.append('description', description.value || '');
-    formData.append('prix', (prix.value * 100).toString());
+    formData.append('titre', titre.value || '');
+    formData.append('corps', corps.value || '');
     formData.append('image', selectedFile.value);
-    await store.dispatch('createMenu', { menu: formData, token: token.value });
-    nom.value="";
-    description.value="";
-    prix.value=0;
+    await store.dispatch('createBlog', { blog: formData, token: token.value });
+    titre.value="";
+    corps.value="";
     selectedFile.value=null;
 }
 </script>
@@ -64,7 +56,7 @@ p {
 .euroSign {
     width: auto;
 }
-input, button {
+input, button, textarea {
     width: 100%;
     border: none;
     border-radius: 12px;

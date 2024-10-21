@@ -1,18 +1,13 @@
 <template>
     <form @submit.prevent="submit">
-        <h2>Ajouter un plat</h2>
-        <label for="nom">
-            <p>Nom :</p>
-            <input v-model="nom" type="text" name="nom" id="nom">
+        <h2>Ajouter une promotion</h2>
+        <label for="titre">
+            <p>Titre :</p>
+            <input v-model="titre" type="text" name="titre" id="titre">
         </label>
         <label for="description">
             <p>Description :</p>
             <input v-model="description" type="text" name="description" id="description">
-        </label>
-        <label for="prix">
-            <p>Prix :</p>
-            <input v-model="prix" type="number" step="0.01" name="prix" id="prix">
-            <p class="euroSign">€</p>
         </label>
         <label for="image">
             <p>Image :</p>
@@ -29,9 +24,8 @@ import { useStore } from 'vuex';
 const store = useStore();
 const token = computed(() => store.getters.token);
 const selectedFile = ref();
-const nom = ref('');
+const titre = ref('');
 const description = ref('');
-const prix = ref(0);
 const handleFileUpload = (event) => {
     selectedFile.value = event.target.files[0];
 }
@@ -41,10 +35,9 @@ const submit = async () => {
     formData.append('description', description.value || '');
     formData.append('prix', (prix.value * 100).toString());
     formData.append('image', selectedFile.value);
-    await store.dispatch('createMenu', { menu: formData, token: token.value });
-    nom.value="";
+    await store.dispatch('createPromotion', { promotion: formData, token: token.value });
+    titre.value="";
     description.value="";
-    prix.value=0;
     selectedFile.value=null;
 }
 </script>
