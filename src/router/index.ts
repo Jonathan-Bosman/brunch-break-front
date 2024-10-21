@@ -2,11 +2,12 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MenuView from '@/views/MenuView.vue'
 import ContactView from '@/views/ContactView.vue'
-import BackOffice from '@/views/BackOffice.vue'
 import BlogView from '@/views/BlogView.vue'
 import ArticleView from '@/views/ArticleView.vue'
 import ReservationView from '@/views/ReservationView.vue'
 import NoView from '@/views/NoView.vue'
+import LoginView from '@/views/LoginView.vue'
+import BackOffice from '@/views/BackOffice.vue'
 import ConditionsGenerales from '@/views/ConditionsGenerales.vue'
 import PolitiqueConfidentialite from '@/views/PolitiqueConfidentialite.vue'
 import MentionsLegales from '@/views/MentionsLegales.vue'
@@ -46,6 +47,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/reservation',
     name: 'reservation',
     component: ReservationView
+  },
+  {
+    path: '/admin-login',
+    name: 'admin',
+    component: LoginView
   },
   {
     path: '/back-office',
