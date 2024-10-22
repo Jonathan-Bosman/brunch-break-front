@@ -19,16 +19,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineProps } from 'vue';
+import { computed, ref, defineProps, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
+const store = useStore();
 const props = defineProps({
     id: Number,
     titre: String,
     corps: String
 });
+const emit = defineEmits(['emitChange']);
 
-const store = useStore();
 const token = computed(() => store.getters.token);
 const selectedFile = ref();
 const id = ref(props.id);
@@ -43,6 +44,7 @@ const submit = async () => {
     formData.append('corps', corps.value || '');
     formData.append('image', selectedFile.value);
     await store.dispatch('updateBlog', { blog: formData, id: id.value, token: token.value });
+    emit('emitChange');
     titre.value="";
     corps.value="";
     selectedFile.value=null;
@@ -50,7 +52,8 @@ const submit = async () => {
 const effacer = async () => {
     const confirmer = confirm(`Voulez vous effacer ${titre.value} ?`);
     if(confirmer!==true)return;
-    else await store.dispatch('deleteBlog', { id: id, token: token.value});
+    else await store.dispatch('deleteBlog', { id: id.value, token: token.value});
+    emit('emitChange');
 }
 </script>
 

@@ -138,8 +138,8 @@ export default createStore({
       try {
         const res = await fetch(`${API_ROOT}/menu/create`, {
           method: "post",
-          headers: {'Content-Type': 'application/json', 'Authorization': `bearer ${token}`},
-          body: JSON.stringify(menu)
+          headers: {'Authorization': `bearer ${token}`},
+          body: menu
         });
       } catch(err) {
         console.error(err);
@@ -149,8 +149,8 @@ export default createStore({
       try {
         const res = await fetch(`${API_ROOT}/menu/update/${id}`, {
           method: "put",
-          headers: {'Content-Type': 'application/json', 'Authorization': `bearer ${token}`},
-          body: JSON.stringify(menu)
+          headers: {'Authorization': `bearer ${token}`},
+          body: menu
         });
       } catch(err) {
         console.error(err);
@@ -179,8 +179,8 @@ export default createStore({
       try {
         const res = await fetch(`${API_ROOT}/promotions/create`, {
           method: "post",
-          headers: {'Content-Type': 'application/json', 'Authorization': `bearer ${token}`},
-          body: JSON.stringify(promotion)
+          headers: {'Authorization': `bearer ${token}`},
+          body: promotion
         });
       } catch(err) {
         console.error(err);
@@ -190,8 +190,8 @@ export default createStore({
       try {
         const res = await fetch(`${API_ROOT}/promotions/update/${id}`, {
           method: "put",
-          headers: {'Content-Type': 'application/json', 'Authorization': `bearer ${token}`},
-          body: JSON.stringify(promotion)
+          headers: {'Authorization': `bearer ${token}`},
+          body: promotion
         });
       } catch(err) {
         console.error(err);
@@ -229,8 +229,8 @@ export default createStore({
       try {
         const res = await fetch(`${API_ROOT}/blog/create`, {
           method: "post",
-          headers: {'Content-Type': 'application/json', 'Authorization': `bearer ${token}`},
-          body: JSON.stringify(blog)
+          headers: {'Authorization': `bearer ${token}`},
+          body: blog
         });
       } catch(err) {
         console.error(err);
@@ -240,8 +240,8 @@ export default createStore({
       try {
         const res = await fetch(`${API_ROOT}/blog/update/${id}`, {
           method: "put",
-          headers: {'Content-Type': 'application/json', 'Authorization': `bearer ${token}`},
-          body: JSON.stringify(blog)
+          headers: {'Authorization': `bearer ${token}`},
+          body: blog
         });
       } catch(err) {
         console.error(err);
@@ -309,7 +309,7 @@ export default createStore({
     },
     async updateCapacite({ commit }, { capacite, token }) {
       try {
-        const res = await fetch(`${API_ROOT}/reservations/capacites/update`, {
+        const res = await fetch(`${API_ROOT}/reservations/update/capacite`, {
           method: "put",
           headers: {'Content-Type': 'application/json', 'Authorization': `bearer ${token}`},
           body: JSON.stringify(capacite)

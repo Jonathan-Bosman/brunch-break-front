@@ -22,9 +22,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineProps } from 'vue';
+import { computed, ref, defineProps, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
+const store = useStore();
 const props = defineProps({
     id: Number,
     ouverture_matin: Number,
@@ -32,8 +33,8 @@ const props = defineProps({
     ouverture_soir: Number,
     fermeture_soir: Number
 });
+const emit = defineEmits(['emitChange']);
 
-const store = useStore();
 const token = computed(() => store.getters.token);
 const id = ref(props.id);
 const ouverture_matin = ref(props.ouverture_matin);
@@ -43,10 +44,7 @@ const fermeture_soir = ref(props.fermeture_soir);
 const submit = async () => {
     const horaires = {ouverture_matin: ouverture_matin.value, fermeture_matin: fermeture_matin.value, ouverture_soir: ouverture_soir.value, fermeture_soir: fermeture_soir.value}
     await store.dispatch('updateHoraires', { horaires: horaires, id: id.value, token: token.value });
-    ouverture_matin.value = 0;
-    fermeture_matin.value = 0;
-    ouverture_soir.value = 0;
-    fermeture_soir.value = 0;
+    emit('emitChange');
 }
 </script>
 

@@ -25,14 +25,16 @@
             <p>Banni :</p>
             <input v-model="banni" type="checkbox" name="banni" id="banni">
         </label>
-        <button type="submit">Ajouter</button>
+        <button type="submit">Modifier</button>
+        <button @click.prevent="effacer">Effacer</button>
     </form>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineProps } from 'vue';
+import { computed, ref, defineProps, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
+const store = useStore();
 const props = defineProps({
     id: Number,
     nom: String,
@@ -42,8 +44,8 @@ const props = defineProps({
     newsletter: Boolean,
     banni: Boolean
 });
+const emit = defineEmits(['emitChange']);
 
-const store = useStore();
 const token = computed(() => store.getters.token);
 const id = ref(props.id);
 const nom = ref(props.nom);
@@ -53,14 +55,16 @@ const email = ref(props.email);
 const newsletter = ref(props.newsletter);
 const banni = ref(props.banni);
 const submit = async () => {
-    const formData = new FormData();
-    formData.append('nom', nom.value || '');
-    formData.append('prenom', prenom.value || '');
-    formData.append('telephone', telephone.value || '');
-    formData.append('email', email.value || '');
-    formData.append('newsletter', newsletter.value || false);
-    formData.append('banni', banni.value || false);
-    await store.dispatch('updateUtilisateur', { utilisateur: formData, id: id.value, token: token.value });
+    const utilisateur = {
+    nom: nom.value,
+    prenom: prenom.value,
+    email: email.value,
+    telephone: telephone.value,
+    newsletter: newsletter.value,
+    banni: banni.value
+  }
+    await store.dispatch('updateUtilisateur', { utilisateur: utilisateur, id: id.value, token: token.value });
+    emit('emitChange');
     nom.value="";
     prenom.value="";
     telephone.value="";
@@ -72,6 +76,7 @@ const effacer = async () => {
     const confirmer = confirm(`Voulez vous effacer ${nom.value} ?`);
     if(confirmer!==true)return;
     else await store.dispatch('deleteUtilisateur', { id: id.value, token: token.value});
+    emit('emitChange');
 }
 </script>
 

@@ -10,22 +10,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineProps } from 'vue';
+import { computed, ref, defineProps, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
+const store = useStore();
 const props = defineProps({
     id: Number,
     nombre_personnes: Number
 });
+const emit = defineEmits(['emitChange']);
 
-const store = useStore();
 const token = computed(() => store.getters.token);
 const id = ref(props.id);
 const nombre_personnes = ref(props.nombre_personnes);
 const submit = async () => {
     const capacite = {nombre_personnes: nombre_personnes.value}
-    await store.dispatch('updateHoraires', { capacite: capacite, id: id.value, token: token.value });
-    nombre_personnes.value = 0;
+    await store.dispatch('updateCapacite', { capacite: capacite, id: id.value, token: token.value });
+    emit('emitChange');
 }
 </script>
 
