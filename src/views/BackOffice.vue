@@ -16,12 +16,14 @@
         </div>
         <UpdatePlat
             v-if="updateMenu!==null && menus[updateMenu]"
-            :id="updateMenu"
+            :key="menus[updateMenu].id"
+            :id="menus[updateMenu].id"
             :nom="menus[updateMenu].nom"
             :description="menus[updateMenu].description"
             :prix="menus[updateMenu].prix"
+            @emitChange="onChange"
             />
-        <AjoutPlat v-if="updateMenu===null"/>
+        <AjoutPlat v-if="updateMenu===null" @emitChange="onChange"/>
         <div class="button" @click="openPromotion">
             <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
             <span>Promotions</span>
@@ -35,11 +37,13 @@
         </div>
         <UpdatePromo
             v-if="updatePromotion!==null && promotions[updatePromotion]"
-            :id="updatePromotion"
+            :key="promotions[updatePromotion].id"
+            :id="promotions[updatePromotion].id"
             :titre="promotions[updatePromotion].titre"
             :description="promotions[updatePromotion].description"
+            @emitChange="onChange"
             />
-        <AjoutPromo v-if="updatePromotion===null"/>
+        <AjoutPromo v-if="updatePromotion===null" @emitChange="onChange"/>
         <div class="button" @click="openReservation">
             <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
             <span>Reservations</span>
@@ -56,14 +60,17 @@
         </div>
         <UpdateReservation
             v-if="updateReservation!==null && reservations[updateReservation]"
-            :id="updateReservation"
+            :key="reservations[updateReservation].id"
+            :id="reservations[updateReservation].id"
             :telephone="reservations[updateReservation].telephone"
+            :email="reservations[updateReservation].email"
             :date_reservation="reservations[updateReservation].date_reservation"
             :id_jour="reservations[updateReservation].id_jour"
             :heure="reservations[updateReservation].heure"
             :nombre_personnes="reservations[updateReservation].nombre_personnes"
+            @emitChange="onChange"
             />
-        <AjoutReservation v-if="updateReservation===null"/>
+        <AjoutReservation v-if="updateReservation===null" @emitChange="onChange"/>
         <div class="button" @click="openUtilisateur">
             <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
             <span>Utilisateurs</span>
@@ -81,15 +88,17 @@
         </div>
         <UpdateUtilisateur
             v-if="updateUtilisateur!==null && utilisateurs[updateUtilisateur]"
-            :id="updateUtilisateur"
+            :key="utilisateurs[updateUtilisateur].id"
+            :id="utilisateurs[updateUtilisateur].id"
             :nom="utilisateurs[updateUtilisateur].nom"
             :prenom="utilisateurs[updateUtilisateur].prenom"
             :telephone="utilisateurs[updateUtilisateur].telephone"
             :email="utilisateurs[updateUtilisateur].email"
-            :newsletter="utilisateurs[updateUtilisateur].newsletter"
-            :banni="utilisateurs[updateUtilisateur].banni"
+            :newsletter="Boolean(utilisateurs[updateUtilisateur].newsletter)"
+            :banni="Boolean(utilisateurs[updateUtilisateur].banni)"
+            @emitChange="onChange"
             />
-        <AjoutUtilisateur v-if="updateUtilisateur===null"/>
+        <AjoutUtilisateur v-if="updateUtilisateur===null" @emitChange="onChange"/>
         <div class="button" @click="openBlog">
             <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
             <span>Blog</span>
@@ -103,11 +112,13 @@
         </div>
         <UpdateBlog
             v-if="updateBlog!==null && blogs[updateBlog]"
-            :id="updateBlog"
+            :key="blogs[updateBlog].id"
+            :id="blogs[updateBlog].id"
             :titre="blogs[updateBlog].titre"
             :corps="blogs[updateBlog].corps"
+            @emitChange="onChange"
             />
-        <AjoutBlog v-if="updateBlog===null"/>
+        <AjoutBlog v-if="updateBlog===null" @emitChange="onChange"/>
         <div class="button" @click="openHoraire">
             <span><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#6C9E41"><path d="M431.33-120v-230H498v82h342v66.67H498V-120h-66.67ZM120-201.33V-268h244.67v66.67H120Zm178-164v-81.34H120v-66.66h178V-596h66.67v230.67H298Zm133.33-81.34v-66.66H840v66.66H431.33Zm164-163.33v-230H662v81.33h178V-692H662v82h-66.67ZM120-692v-66.67h408.67V-692H120Z"/></svg></span>
             <span>Horaires</span>
@@ -124,15 +135,18 @@
         </div>
         <UpdateHoraire
             v-if="updateHoraire!==null && horaires[updateHoraire]"
-            :id="updateHoraire"
+            :key="horaires[updateHoraire].id"
+            :id="horaires[updateHoraire].id"
             :ouverture_matin="horaires[updateHoraire].ouverture_matin"
             :fermeture_matin="horaires[updateHoraire].fermeture_matin"
             :ouverture_soir="horaires[updateHoraire].ouverture_soir"
             :fermeture_soir="horaires[updateHoraire].fermeture_soir"
+            @emitChange="onChange"
             />
         <UpdateCapacite
             :id="0"
             :nombre_personnes="capacite[0].nombre_personnes"
+            @emitChange="onChange"
             />
     </div>
 </template>
@@ -215,6 +229,20 @@ const openBlog = () => {
 const openHoraire = () => {
   isOpenHoraire.value!==true?isOpenHoraire.value=true:isOpenHoraire.value=false;
 }
+const onChange = (async () => {
+  try {
+    await store.dispatch('fetchAllUtilisateurs', { token: token.value });
+    await store.dispatch('fetchAllMenus');
+    await store.dispatch('fetchAllPromotions');
+    await store.dispatch('fetchAllReservations');
+    await store.dispatch('fetchAllBlog');
+    await store.dispatch('fetchAllCapacite');
+    await store.dispatch('fetchAllHoraires');
+  } catch (error) {
+    console.error('Erreur lors du chargement des données:', error);
+  }
+  isLoading.value = false;
+});
 onMounted(async () => {
   try {
     await store.dispatch('fetchAllUtilisateurs', { token: token.value });

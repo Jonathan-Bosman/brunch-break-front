@@ -5,9 +5,21 @@
             <p>Téléphone :</p>
             <input v-model="telephone" type="tel" name="telephone" id="telephone">
         </label>
-        <label for="date_reservation">
-            <p>Date :</p>
-            <input v-model="date_reservation" type="date" name="date_reservation" id="date_reservation">
+        <label for="email">
+            <p>E-mail :</p>
+            <input v-model="email" type="email" name="email" id="email">
+        </label>
+        <label for="year">
+            <p>Année :</p>
+            <input v-model="year" type="number" name="year" id="year">
+        </label>
+        <label for="month">
+            <p>Mois :</p>
+            <input v-model="month" type="number" name="month" id="month">
+        </label>
+        <label for="day">
+            <p>Jour :</p>
+            <input v-model="day" type="number" name="day" id="day">
         </label>
         <label for="id_jour">
             <p>Jour :</p>
@@ -34,25 +46,36 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
+const emit = defineEmits(['emitChange']);
+
 const token = computed(() => store.getters.token);
 const telephone = ref('');
-const date_reservation = ref('');
+const email = ref('');
+const year = ref(2025);
+const month = ref(1);
+const day = ref(1);
+const date_reservation = ref(`${year.value}-${month.value}-${day.value}`);
 const id_jour = ref(1);
 const heure = ref(0);
 const nombre_personnes = ref(1);
 const submit = async () => {
-    const formData = new FormData();
-    formData.append('telephone', telephone.value || '');
-    formData.append('date_reservation', date_reservation.value || '');
-    formData.append('id_jour', id_jour.value.toString() || '1');
-    formData.append('heure', heure.value.toString() || '0');
-    formData.append('nombre_personnes', nombre_personnes.value.toString() || '');
-    await store.dispatch('createReservation', { reservation: formData, token: token.value });
+    const reservation = {
+    telephone: telephone.value,
+    email: email.value,
+    date_reservation: date_reservation.value,
+    id_jour: id_jour.value,
+    heure: heure.value,
+    nombre_personnes: nombre_personnes.value,
+  }
+  console.log(reservation);
+    await store.dispatch('createReservation', { reservation: reservation });
+    emit('emitChange');
     telephone.value="";
+    email.value="";
     date_reservation.value="";
     id_jour.value=0;
     heure.value=0;

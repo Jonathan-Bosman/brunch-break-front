@@ -55,6 +55,7 @@ const submit = async () => {
 
 <style scoped lang="scss">
 .wrapper {
+    margin-top: 2.5rem;
     display: flex;
     flex-direction: column;
     width: 100%;

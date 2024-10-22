@@ -21,41 +21,38 @@
             <p>Newsletter :</p>
             <input v-model="newsletter" type="checkbox" name="newsletter" id="newsletter">
         </label>
-        <label for="banni">
-            <p>Banni :</p>
-            <input v-model="banni" type="checkbox" name="banni" id="banni">
-        </label>
         <button type="submit">Ajouter</button>
     </form>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
+const emit = defineEmits(['emitChange']);
+
 const token = computed(() => store.getters.token);
 const nom = ref('');
 const prenom = ref('');
 const telephone = ref('');
 const email = ref('');
 const newsletter = ref(false);
-const banni = ref(false);
 const submit = async () => {
-    const formData = new FormData();
-    formData.append('nom', nom.value || '');
-    formData.append('prenom', prenom.value || '');
-    formData.append('telephone', telephone.value || '');
-    formData.append('email', email.value || '');
-    formData.append('newsletter', newsletter.value || false);
-    formData.append('banni', banni.value || false);
-    await store.dispatch('createUtilisateur', { utilisateur: formData });
+    const utilisateur = {
+    nom: nom.value,
+    prenom: prenom.value,
+    email: email.value,
+    telephone: telephone.value,
+    newsletter: newsletter.value
+  }
+    await store.dispatch('createUtilisateur', { utilisateur: utilisateur });
+    emit('emitChange');
     nom.value="";
     prenom.value="";
     telephone.value="";
     email.value="";
     newsletter.value=false;
-    banni.value=false;
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="submit">
-        <h2>Modifier un plat</h2>
+        <h2>Modifier un plat {{ id }}</h2>
         <label for="nom">
             <p>Nom :</p>
             <input v-model="nom" type="text" name="nom" id="nom">
@@ -24,17 +24,18 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineProps } from 'vue';
+import { computed, ref, defineProps, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
+const store = useStore();
 const props = defineProps({
     id: Number,
     nom: String,
     description: String,
     prix: Number
 });
+const emit = defineEmits(['emitChange']);
 
-const store = useStore();
 const token = computed(() => store.getters.token);
 const selectedFile = ref();
 const id = ref(props.id);
@@ -51,6 +52,7 @@ const submit = async () => {
     formData.append('prix', (prix.value * 100).toString());
     formData.append('image', selectedFile.value);
     await store.dispatch('updateMenu', { menu: formData, id: id.value, token: token.value });
+    emit('emitChange');
     nom.value="";
     description.value="";
     prix.value=0;
@@ -60,6 +62,7 @@ const effacer = async () => {
     const confirmer = confirm(`Voulez vous effacer ${nom.value} ?`);
     if(confirmer!==true)return;
     else await store.dispatch('deleteMenu', { id: id.value, token: token.value});
+    emit('emitChange');
 }
 </script>
 

@@ -18,10 +18,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
+const emit = defineEmits(['emitChange']);
+
 const token = computed(() => store.getters.token);
 const selectedFile = ref();
 const titre = ref('');
@@ -31,11 +33,11 @@ const handleFileUpload = (event) => {
 }
 const submit = async () => {
     const formData = new FormData();
-    formData.append('nom', nom.value || '');
+    formData.append('titre', titre.value || '');
     formData.append('description', description.value || '');
-    formData.append('prix', (prix.value * 100).toString());
     formData.append('image', selectedFile.value);
     await store.dispatch('createPromotion', { promotion: formData, token: token.value });
+    emit('emitChange');
     titre.value="";
     description.value="";
     selectedFile.value=null;

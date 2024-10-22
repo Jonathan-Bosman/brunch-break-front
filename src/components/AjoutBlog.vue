@@ -18,10 +18,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
+const emit = defineEmits(['emitChange']);
+
 const token = computed(() => store.getters.token);
 const selectedFile = ref();
 const titre = ref('');
@@ -35,6 +37,7 @@ const submit = async () => {
     formData.append('corps', corps.value || '');
     formData.append('image', selectedFile.value);
     await store.dispatch('createBlog', { blog: formData, token: token.value });
+    emit('emitChange');
     titre.value="";
     corps.value="";
     selectedFile.value=null;

@@ -19,16 +19,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, defineProps } from 'vue';
+import { computed, ref, defineProps, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
+const store = useStore();
 const props = defineProps({
     id: Number,
     titre: String,
     description: String
 });
+const emit = defineEmits(['emitChange']);
 
-const store = useStore();
 const token = computed(() => store.getters.token);
 const selectedFile = ref();
 const id = ref(props.id);
@@ -43,6 +44,7 @@ const submit = async () => {
     formData.append('description', description.value || '');
     formData.append('image', selectedFile.value);
     await store.dispatch('updatePromotion', { promotion: formData, id: id.value, token: token.value });
+    emit('emitChange');
     titre.value="";
     description.value="";
     selectedFile.value=null;
@@ -50,7 +52,8 @@ const submit = async () => {
 const effacer = async () => {
     const confirmer = confirm(`Voulez vous effacer ${titre.value} ?`);
     if(confirmer!==true)return;
-    else await store.dispatch('deletePromotion', { id: id, token: token.value});
+    else await store.dispatch('deletePromotion', { id: id.value, token: token.value});
+    emit('emitChange');
 }
 </script>
 

@@ -54,7 +54,7 @@
         <input v-model="newsletter" type="checkbox" name="newsletter" id="newsletter">
       </label>
       <label for="consent">
-        <p class="checkBox">J'ai lu et consent à la <RouterLink to="/confidentialite">Politique de confidentialité</RouterLink> et aux <RouterLink to="/conditions">CGU</RouterLink>RouterLink> :</p>
+        <p class="checkBox">J'ai lu et consent à la <RouterLink to="/confidentialite">Politique de confidentialité</RouterLink> et aux <RouterLink to="/conditions">CGU</RouterLink> :</p>
         <input v-model="consent" type="checkbox" name="consent" id="consent">
       </label>
       <button :disabled="!consent" type="submit">RÉSERVER</button>

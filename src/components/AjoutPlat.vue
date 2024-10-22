@@ -23,10 +23,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, defineEmits } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
+const emit = defineEmits(['emitChange']);
+
 const token = computed(() => store.getters.token);
 const selectedFile = ref();
 const nom = ref('');
@@ -42,6 +44,7 @@ const submit = async () => {
     formData.append('prix', (prix.value * 100).toString());
     formData.append('image', selectedFile.value);
     await store.dispatch('createMenu', { menu: formData, token: token.value });
+    emit('emitChange');
     nom.value="";
     description.value="";
     prix.value=0;
